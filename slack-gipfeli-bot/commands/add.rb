@@ -19,7 +19,6 @@ module SlackGipfeliBot
         else
           client.say(channel: data.channel, text: "Your order of '#{wish}' has been added to the list.")
 					cache.set('list', "#{cache.get('list')} \n #{wish}")	
-					client.say(channel: data.channel, text: cache.get('list'))
           #list.write("#{wish}\n")
         end
 

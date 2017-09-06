@@ -3,10 +3,10 @@ module SlackGipfeliBot
     class Calculate < SlackRubyBot::Commands::Base
 
       command 'show' do |client, data, _match|
-					if !File.file?('gipfeli_list') || File.read('gipfeli_list').empty?
+					if cache.get('list') == nil
 						text = 'There are no orders currently'	
 					else
-						text = File.read('gipfeli_list') 
+						text = cache.get('list')
 					end
         client.say(channel: data.channel, text: text)
       end
