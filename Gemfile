@@ -8,6 +8,8 @@ gem 'sinatra'
 gem 'dotenv'
 gem 'whenever', :require => false
 gem 'celluloid-io'
+gem 'ruby-cache', '~> 0.3.0'
+gem 'dalli'
 
 group :development, :test do
   gem 'rake'

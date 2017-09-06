@@ -37,6 +37,7 @@ GEM
       timers (>= 4.1.1)
     chronic (0.10.2)
     concurrent-ruby (1.0.2)
+    dalli (2.7.6)
     diff-lcs (1.2.5)
     dotenv (2.1.1)
     faraday (0.10.0)
@@ -73,6 +74,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    ruby-cache (0.3.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -103,12 +105,14 @@ PLATFORMS
 
 DEPENDENCIES
   celluloid-io
+  dalli
   dotenv
   figaro
   foreman
   puma
   rake
   rspec
+  ruby-cache (~> 0.3.0)
   sinatra
   slack-ruby-bot!
   whenever
