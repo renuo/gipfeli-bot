@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 module SlackGipfeliBot
-  class Bot < SlackGipfeliBot::Bot
+  class Bot < SlackRubyBot::Bot
   end
 end
