@@ -6,6 +6,7 @@ gem 'figaro'
 gem 'puma'
 gem 'sinatra'
 gem 'dotenv'
+gem 'whenever', :require => false
 gem 'celluloid-io'
 
 group :development, :test do
