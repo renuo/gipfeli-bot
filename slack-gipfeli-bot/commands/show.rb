@@ -14,6 +14,7 @@ module SlackGipfeliBot
 					if cache.get('list') == nil
 						text = 'There are no orders currently'	
 					else
+						client.say(channel: data.channel, text: '*Here are the current orders:*')
 						text = cache.get('list')
 					end
         client.say(channel: data.channel, text: text)
