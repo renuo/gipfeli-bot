@@ -20,20 +20,22 @@ module SlackGipfeliBot
           orders << item.match(/ [\S\W]+/).to_s[1..-1]
         end
 
-        index = orders.map(&:downcase).find_index(new.downcase)
+        index = orders.map(&:downcase).find_index(new_order.downcase)
 
         if new_order.nil?
           client.say(channel: data.channel, text: 'You need to tell me your order! (e.g. \'add gipfeli\')')
-        elsif index
-          times[index] = "#{times[index][0..-2].to_i + 1}x"
         else
-          times << '1x'
-          orders << new_order
-          client.say(channel: data.channel, text: "Your order of '#{wish}' has been added to the list.")
-          cache.set('list', times.zip(orders).map{|x| x.join(' ')}.join("\n"), 36_000)
+          if index
+            times[index] = "#{times[index][0..-2].to_i + 1}x"
+          else
+            times << '1x'
+            orders << new_order
+          end
+          new_list = times.zip(orders).map {|x| x.join(' ')}.join("\n")
+          cache.set('list', new_list, 36_000)
+          client.say(channel: data.channel, text: "Your order of '#{new_order}' has been added to the list.")
         end
       end
     end
   end
-end
 end
