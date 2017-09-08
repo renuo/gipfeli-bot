@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'slack-ruby-bot'
 require 'slack-gipfeli-bot/commands/add'
 require 'slack-gipfeli-bot/bot'

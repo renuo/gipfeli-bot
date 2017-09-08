@@ -1,28 +1,40 @@
+# frozen_string_literal: true
+
 module SlackGipfeliBot
   module Commands
     class Calculate < SlackRubyBot::Commands::Base
-			require 'dalli'
-			cache = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
-													{:username => ENV["MEMCACHIER_USERNAME"],
-													 :password => ENV["MEMCACHIER_PASSWORD"],
-													 :failover => true,
-													 :socket_timeout => 1.5,
-													 :socket_failure_delay => 0.2
-													})
+      require 'dalli'
+      cache = Dalli::Client.new((ENV['MEMCACHIER_SERVERS'] || '').split(','),
+                                username: ENV['MEMCACHIER_USERNAME'],
+                                password: ENV['MEMCACHIER_PASSWORD'],
+                                failover: true,
+                                socket_timeout: 1.5,
+                                socket_failure_delay: 0.2)
 
       command 'add' do |client, data, _match|
-        #list = File.open('gipfeli_list', 'a')
+        # list = File.open('gipfeli_list', 'a')
+        cur_list, times, orders, new_order = cache.get('list'), [], [], match.to_s[12..-1]
 
-        wish = _match.to_s[12..-1]
-        if wish.nil?
-          client.say(channel: data.channel, text: 'You need to tell me your order! (e.g. \'add gipfeli\'')
-        else
-          client.say(channel: data.channel, text: "Your order of '#{wish}' has been added to the list.")
-					cache.set('list', "#{cache.get('list')} \n #{wish}", 36000) 
-          #list.write("#{wish}\n")
+        cur_list.split("\n").each do |item|
+          times << item.match(/\d+x/).to_s
+          orders << item.match(/ [\S\W]+/).to_s[1..-1]
         end
 
-        list.close
+        index = orders.map(&:downcase).find_index(new_order.downcase)
+
+        if new_order.nil?
+          client.say(channel: data.channel, text: 'You need to tell me your order! (e.g. \'add gipfeli\')')
+        else
+          if index
+            times[index] = "#{times[index][0..-2].to_i + 1}x"
+          else
+            times << '1x'
+            orders << new_order
+          end
+          new_list = times.zip(orders).map {|x| x.join(' ')}.join("\n")
+          cache.set('list', new_list, 36_000)
+          client.say(channel: data.channel, text: "Your order of '#{new_order}' has been added to the list.")
+        end
       end
     end
   end
