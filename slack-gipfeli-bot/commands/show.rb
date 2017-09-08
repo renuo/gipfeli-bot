@@ -10,6 +10,7 @@ module SlackGipfeliBot
                                 failover: true,
                                 socket_timeout: 1.5,
                                 socket_failure_delay: 0.2)
+
       command 'show' do |client, data, _match|
         if cache.get('list').nil?
           text = 'There are no orders currently'
