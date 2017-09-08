@@ -16,8 +16,8 @@ module SlackGipfeliBot
         cur_list, times, orders, new_order = cache.get('list'), [], [], match.to_s[12..-1]
 
         cur_list.split("\n").each do |item|
-          times << e.match(/\d+x/).to_s
-          orders << e.match(/ [\S\W]+/).to_s[1..-1]
+          times << item.match(/\d+x/).to_s
+          orders << item.match(/ [\S\W]+/).to_s[1..-1]
         end
 
         index = orders.map(&:downcase).find_index(new.downcase)
@@ -30,7 +30,7 @@ module SlackGipfeliBot
           times << '1x'
           orders << new_order
           client.say(channel: data.channel, text: "Your order of '#{wish}' has been added to the list.")
-          cache.set('list', "#{cache.get('list')}\n #{wish}", 36_000)
+          cache.set('list', times.zip(orders).map{|x| x.join(' ')}.join("\n"), 36_000)
         end
       end
     end
