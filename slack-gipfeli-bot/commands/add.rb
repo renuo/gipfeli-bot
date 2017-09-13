@@ -2,7 +2,7 @@
 
 module SlackGipfeliBot
   module Commands
-    class Calculate < SlackRubyBot::Commands::Base
+    class Add < SlackRubyBot::Commands::Base
       require 'dalli'
       cache = Dalli::Client.new((ENV['MEMCACHIER_SERVERS'] || '').split(','),
                                 username: ENV['MEMCACHIER_USERNAME'],
