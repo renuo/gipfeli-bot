@@ -12,8 +12,6 @@ module SlackGipfeliBot
                                 socket_failure_delay: 0.2)
 
       command 'add' do |client, data, _match|
-        # list = File.open('gipfeli_list', 'a')
-
         wish = _match.to_s[12..-1]
         if wish.nil?
           client.say(channel: data.channel, text:
@@ -22,10 +20,7 @@ module SlackGipfeliBot
           client.say(channel: data.channel, text:
               "Your order of '#{wish}' has been added to the list.")
           cache.set('list', "#{cache.get('list')} \n #{wish}", 36_000)
-          # list.write("#{wish}\n")
         end
-
-        list.close
       end
     end
   end
