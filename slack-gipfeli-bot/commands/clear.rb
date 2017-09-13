@@ -16,8 +16,8 @@ module SlackGipfeliBot
         else
           list_text = cache.get('list')
           cache.set('list', nil)
-          info_text = '*The list has been cleared. Now go buy some gipfelis! Here\'s your shopping list:*'
-          client.say(channel: data.channel, text: list_text)
+          info_text = "*The list has been cleared. Now go buy some gipfelis!"\
+                      "Here\'s your shopping list:*\n" + list_text
           client.say(channel: ENV["SLACK_FOOD_CHANNEL_ID"], text: '*Someone is on their way to buy gipfelis. Your order should arrive in the break room or kitchen within the next minutes.*')
 
         end
