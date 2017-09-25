@@ -15,7 +15,7 @@ module SlackGipfeliBot
         wish = _match.to_s[12..-1]
         if wish.nil?
           client.say(channel: data.channel, text:
-              'You need to tell me your order! (e.g. \'add gipfeli\'')
+              'You need to tell me your order! (e.g. \'add gipfeli\')')
         else
           client.say(channel: data.channel, text:
               "Your order of '#{wish}' has been added to the list.")
